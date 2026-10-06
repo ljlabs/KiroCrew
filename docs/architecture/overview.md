@@ -162,10 +162,43 @@ own PreToolUse gate before kiro-cli is allowed to run it. See
 | `scripts/` | Build tooling, linters, dev helpers |
 | `docs/` | Contributor and architecture docs (this tree) |
 | `test/` | pytest suite |
+| `site/` | Public marketing site, published to GitHub Pages by `pages.yml` |
+| `evals/` | Measured checks on bundled skills, one directory per skill |
+| `semgrep/` | Custom Semgrep rules that `code-review.yml` enforces |
+| `semgrep-tests/` | Annotated fixtures that `semgrep --test` checks those rules against; `.semgrepignore` keeps them out of the normal scan |
+| `config/` | Config template for the Playwright MCP server |
+| `bin/` | `kirocrew` launcher that runs the CLI from the install's bundled `.venv` |
+| `assets/` | Images used by `README.md` |
+| `temp-screenshots/` | Screenshot evidence a fork PR commits when it cannot attach media (gitignored, added with `git add -f`; see the PR template) |
+| `.github/` | Workflows, composite actions, CI scripts, issue and PR templates, review prompts, `CODEOWNERS`, and the baselines the lint checks compare against |
+| `.kiro/` | Kiro settings and feature specs for working on this repository in Kiro |
 
 A skill that a shipped feature depends on must live in
 `src/kiro_crew/builtin_skills/`; only `src/` is packaged, so a required skill
 placed in top-level `skills/` never reaches an installed user.
+
+### Files at the repository root
+
+| Files | Purpose |
+|---|---|
+| `pyproject.toml`, `setup.py`, `setup.cfg`, `MANIFEST.in` | Python packaging: metadata, dependencies and extras, tool configuration, and what the sdist ships |
+| `Makefile`, `make.ps1` | Build targets: `make build` on macOS and Linux, `.\make.ps1 build` on Windows |
+| `install.sh`, `minimal_install.sh`, `setup.sh` | Install and first-time setup from a clone on macOS and Linux |
+| `cloud-install.sh`, `install.ps1` | Cloud-mode bootstrap, where the gateway runs on an instance in your own AWS account and this machine is the thin client (`install.ps1` is the Windows path) |
+| `cli.sh` | Wheel-based CLI installer for a release channel, served from the release download host |
+| `ensure-node.sh`, `ensure-python.sh` | Provision Node.js and Python ≥ 3.12 for the build targets and `setup.sh`; `kirocrew update` and `kirocrew gateway` also call `ensure-node.sh` |
+| `playwright-cli.sh`, `playwright-cli.ps1` | Playwright CLI installers, fetched by raw GitHub URL (`curl … \| sh`) |
+| `dev-backend.sh`, `dev-fullstack.sh`, `dev-seed.sh` | Dev mode: a gateway from live source against the isolated `.kirocrew-dev` home (see `CONTRIBUTING.md`) |
+| `conftest.py`, `xdist_budget.py` | Rootdir pytest configuration, and the xdist worker budget it imports |
+| `*-baseline.json` | CI baselines: `build-chain-audit-baseline.json` (`scripts/check_npm_audit.py`), `python-audit-baseline.json` (`scripts/check_python_audit.py`), `config-baseline.json` (`scripts/generate_config_baseline.py`, `main-ratchet-audit.yml`), `error-code-baseline.json` (the error-code tests) |
+| `AGENTS.md`, `CLAUDE.md`, `AUTOSDE.yaml` | Instructions for AI coding agents (`CLAUDE.md` imports `AGENTS.md`) and the automated review rules |
+| `.gitignore`, `.gitattributes`, `.dockerignore`, `.semgrepignore`, `.jscpd.json`, `.woke.yml`, `.nvmrc`, `.vulnerability-exceptions.json`, `.vulnerability-exceptions.schema.json` | Configuration each tool reads from the repository root |
+| `README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `GOVERNANCE.md`, `MAINTAINERS.md`, `SECURITY.md`, `TENETS.md`, `LICENSE`, `NOTICE`, `THIRD-PARTY-NOTICES` | Project, community and legal files |
+
+These files stay at the root because something resolves them there. Each tool
+reads its configuration from the repository root, `src/kiro_crew/` resolves the
+installer and dev scripts by path, and published one-liners fetch
+`playwright-cli.sh` by raw URL. Moving one is a code change, not a tidy-up.
 
 ## Backend component map
 
