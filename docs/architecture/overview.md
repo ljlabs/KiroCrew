@@ -164,8 +164,7 @@ own PreToolUse gate before kiro-cli is allowed to run it. See
 | `test/` | pytest suite |
 | `site/` | Public marketing site, published to GitHub Pages by `pages.yml` |
 | `evals/` | Measured checks on bundled skills, one directory per skill |
-| `semgrep/` | Custom Semgrep rules that `code-review.yml` enforces |
-| `semgrep-tests/` | Annotated fixtures that `semgrep --test` checks those rules against; `.semgrepignore` keeps them out of the normal scan |
+| `semgrep/` | Custom Semgrep rules that `code-review.yml` enforces; `semgrep/tests/` holds the annotated fixtures `semgrep --test` checks them against, which `.semgrepignore` keeps out of the normal scan |
 | `config/` | Config template for the Playwright MCP server |
 | `bin/` | `kirocrew` launcher that runs the CLI from the install's bundled `.venv` |
 | `assets/` | Images used by `README.md` |

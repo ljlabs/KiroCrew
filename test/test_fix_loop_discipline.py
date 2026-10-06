@@ -35,7 +35,7 @@ CONVERGENCE = ROOT / ".github" / "review-prompts" / "gpt-round-convergence.md"
 DEFERRAL_CHECK = ROOT / ".github" / "workflows" / "disposition-deferral-check.yml"
 AUDIT = ROOT / ".github" / "workflows" / "deferred-findings-audit.yml"
 SEMGREP_RULE = ROOT / "semgrep" / "find-sentinel-truthiness.yaml"
-SEMGREP_FIXTURE = ROOT / "semgrep-tests" / "find-sentinel-truthiness.py"
+SEMGREP_FIXTURE = ROOT / "semgrep" / "tests" / "find-sentinel-truthiness.py"
 AUTOSDE = ROOT / "AUTOSDE.yaml"
 PREPARE_PR = (
     ROOT

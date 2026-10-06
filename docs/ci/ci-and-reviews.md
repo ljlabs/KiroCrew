@@ -1730,7 +1730,7 @@ of the AUTOSDE rules; the semantic half is delegated to the line reviewers.
 - **`inclusive-language`** runs a SHA-pinned `woke` (`WOKE_VERSION`, fetched through `get-woke`) over added lines only, failing on `(error)` severity findings; grepping the terms in `.woke.yml` is NOT equivalent to the gate, and an intentional term is exempted with `# wokeignore:rule=<term>` **on the offending line itself** — `woke` matches per line, so a marker on its own line exempts nothing and leaves the gate red (see the markers beside `master_fd` in `dashboard/handlers/terminal.py`). <!-- wokeignore:rule=master --> Legacy violations are burned down separately; this stops
   new ones.
 - **`sast`** runs Semgrep in a pinned container: first `semgrep --test` over the
-  custom rules in `semgrep/` against the annotated fixtures in `semgrep-tests/`
+  custom rules in `semgrep/` against the annotated fixtures in `semgrep/tests/`
   (both directions — a `ruleid:` line must match, an `ok:` line must not — so a
   rule regression goes red here, not on a later unrelated PR; the rules dir is
   non-hidden because semgrep 1.78's test mode cannot discover tests under a

@@ -327,7 +327,7 @@ jobs:
           echo "sha=$MERGE_BASE" >> "$GITHUB_OUTPUT"
 
       # Regression harness for the custom rules in semgrep/. The fixtures in
-      # semgrep-tests/ assert both directions from inline annotations — a
+      # semgrep/tests/ assert both directions from inline annotations — a
       # `ruleid:` line must match, an `ok:` line must not — so an edit to a
       # hand-tuned rule (or an engine bump past the pinned image) goes red
       # HERE instead of on some future contributor's unrelated PR. Runs on
@@ -336,7 +336,7 @@ jobs:
       # non-hidden `semgrep/` dir: semgrep 1.78's test mode cannot discover
       # tests when rules live in a hidden directory (see issue #4869).
       - name: Semgrep rule tests (custom rules)
-        run: semgrep --test --config semgrep/ semgrep-tests/
+        run: semgrep --test --config semgrep/ semgrep/tests/
 
       - name: Semgrep scan (diff only)
         env:

@@ -86,7 +86,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_BASELINE = ROOT / ".github" / "subprocess-encoding-baseline.txt"
-# docs/ (prose snippets, not shipped code) and semgrep-tests/ (deliberately
+# docs/ (prose snippets, not shipped code) and semgrep/tests/ (deliberately
 # defective probe sources) are excluded on purpose.
 DEFAULT_TARGETS = (
     "src",

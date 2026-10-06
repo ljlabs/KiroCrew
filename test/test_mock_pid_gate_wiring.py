@@ -9,7 +9,7 @@ fails silently:
   unconditional, so the tree it runs against already carries findings on lines
   nobody is touching. Drop that flag and the rule stops being a gate on new code
   and becomes a red on every open pull request at once.
-* ``.semgrepignore`` keeps the normal scan out of ``semgrep-tests/``. The
+* ``.semgrepignore`` keeps the normal scan out of ``semgrep/tests/``. The
   fixtures are deliberate violations, so without that entry the rule fails the
   job on its own test data.
 * The rule's ceiling has to agree with the one the update-provider suite already
@@ -29,7 +29,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 RULE = ROOT / "semgrep" / "mock-pid-allocatable.yaml"
-FIXTURE = ROOT / "semgrep-tests" / "mock-pid-allocatable.py"
+FIXTURE = ROOT / "semgrep" / "tests" / "mock-pid-allocatable.py"
 SEMGREPIGNORE = ROOT / ".semgrepignore"
 CODE_REVIEW = ROOT / ".github" / "workflows" / "code-review.yml"
 UNALLOCATABLE_PID_SUITE = ROOT / "test" / "test_update_provider.py"
@@ -143,7 +143,7 @@ class TestTheScanStaysDiffScoped:
         harness = [run for run in _sast_run_steps() if "--test" in run]
         assert len(harness) == 1, f"expected one rule-test step, found {len(harness)}"
         assert "--config semgrep/" in harness[0]
-        assert "semgrep-tests/" in harness[0]
+        assert "semgrep/tests/" in harness[0]
 
     def test_the_normal_scan_cannot_read_the_fixtures(self) -> None:
         """The fixtures are deliberate violations; the scan must not see them."""
@@ -152,4 +152,4 @@ class TestTheScanStaysDiffScoped:
             for line in SEMGREPIGNORE.read_text(encoding="utf-8").splitlines()
             if line.strip() and not line.strip().startswith("#")
         ]
-        assert "semgrep-tests/" in entries, entries
+        assert "semgrep/tests/" in entries, entries
